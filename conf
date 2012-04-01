@@ -1,5 +1,10 @@
 #!/bin/bash -ex
 
+# TKLPatch to update TKL Redmine v11.3 to Redmine v1.3.2
+# Original work by Dave Stephens
+# Modifications to make it apply to ISO by Jeremy Davis (aka JedMeister)
+# For info see http://www.turnkeylinux.org/forum/general/20110728/tklpatch-redmine
+
 # update rails/rack to correct versions
 cd /var/www/railsapp
 gem install rails -v=2.3.14 --no-ri --no-rdoc
@@ -7,6 +12,9 @@ gem install rack -v=1.1.0 --no-ri --no-rdoc
 
 # do the stuff in the redmine upgrade doc
 rake config/initializers/session_store.rb
+
+# start MySQL - required when patching ISO
+service mysql start
 
 # run db migrations
 rake db:migrate RAILS_ENV=production 
@@ -19,5 +27,8 @@ rake generate_session_store
 rake tmp:cache:clear
 rake tmp:sessions:clear
 
-# restart apache to finish
-service apache2 restart
+# restart apache to finish - not required when patching ISO
+#service apache2 restart
+
+# Stop MySQL so patching of ISO finishes cleanly
+service mysql stop

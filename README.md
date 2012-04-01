@@ -1,3 +1,7 @@
+Slight modification to make this TKLPatch apply to an ISO (rather than a running machine)
+Minor mods by Jeremy Davis (aka JedMeister)
+Thanks to Dave Stephens for the original work - see his original Readme below:
+
 Turnkey Linux Redmine v1.3.2 TKLPatch
 =====================================
 
